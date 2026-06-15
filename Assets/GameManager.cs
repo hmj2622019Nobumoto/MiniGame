@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class GameManager : MonoBehaviour
 
     public void AddScore()
     {
-        score += 100;
+        score += 1;
         UpdateScoreUI();
         spawnTarget();
     }
@@ -62,16 +63,16 @@ public class GameManager : MonoBehaviour
 
             if (timerText != null)
             {
-                timerText.text = "残り時間: " + timer.ToString("F2") + "秒";
+                timerText.text = "time left : " + timer.ToString("F2") + "seconds";
             }
         }
     }
 
     private void DetectObjectTouch()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.value);
             CheckRayHit(ray);
         }
     }
@@ -110,11 +111,15 @@ public class GameManager : MonoBehaviour
 
         if (resultText != null)
         {
-            resultText.text = timelimit + "秒間に　" + touchCount + "回タッチしました！";
+            resultText.text = touchCount + "tap";
         }
     }
     void UpdateScoreUI()
     {
+    //    if (timer score != null)
+    //    {
+    //        timerText.text = "time left: " + timer.ToString("F2") + "second";
+    //    }
     }
 
     void spawnTarget()
